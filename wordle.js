@@ -7,6 +7,7 @@ function createGrid(){
     for (let i = 0;i<30;i++){
         const square = document.createElement('div')
         square.classList.add('square')
+        square.setAttribute('id', 'square'+(i+1))
         grid.append(square)
     }
 }
@@ -15,10 +16,16 @@ function createKeyboard(){
         const key = document.createElement('div')
         key.classList.add('key')
         key.setAttribute('id','key' + (i+1))
+        key.setAttribute('value', keyCharacters[i])
         key.append(keyCharacters[i])
         keyboard.append(key)
+        key.addEventListener('click', function(){
+            console.log('Key ' + (i+1) + ' was clicked!');
+            document.getElementById('square1').innerHTML = "";
+            document.getElementById('square1').append(key.getAttribute('value'));
+            
+        });
     }
-
 }
 createGrid()
 createKeyboard()
