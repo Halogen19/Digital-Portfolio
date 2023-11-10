@@ -2,6 +2,7 @@ const keyCharacters = ['Q','W','E','R','T','Y','U','I','O','P','A','S','D','F','
 const grid = document.querySelector("#wordleGrid")
 const keyboard = document.querySelector("#keyboardBox")
 var layer = 1;
+var currentSquare = 0;
 
 
 function createGrid(){
@@ -24,25 +25,40 @@ function createKeyboard(){
             //function occurs when any key on created keyboard is pressed
             //debugging line
             console.log('Key ' + (i+1) + ' was clicked!');
-
-
-            //stops enter and back keys appearing in boxes when they are clicked
-            if (key.getAttribute('value') != "BACK" && key.getAttribute('value') != "ENTER"){
-                //adds letters to box divs allowing the user to write words
-                for (let j = 0; j <30;j++){
-                    if (document.getElementById('square' +(j+1)).innerHTML === ""){
-                        document.getElementById('square' +(j+1)).append(key.getAttribute('value'));
-                        break;
+            if (layer<7){
+                if (layer/currentSquare>0.2||currentSquare ==0){
+                    //stops enter and back keys appearing in boxes when they are clicked
+                    if (key.getAttribute('value') != "BACK" && key.getAttribute('value') != "ENTER"){
+                        //adds letters to box divs allowing the user to write words
+                        for (let j = 0; j <30;j++){
+                            if (document.getElementById('square' +(j+1)).innerHTML === ""){
+                                document.getElementById('square' +(j+1)).append(key.getAttribute('value'));
+                                currentSquare++;
+                                console.log("The current square is " + currentSquare)
+                                break;
+                            }
+                        }
                     }
                 }
-            }else if (key.getAttribute('value') == "BACK" && document.getElementById('square1').innerHTML != ""){
-                for (j = 0;j<30;j++){
-                    if(document.getElementById('square'+(j+1)).innerHTML === ""){
-                        document.getElementById('square'+(j)).innerHTML = ""
+                //makes the back key delete the most recently selected letter
+                if (key.getAttribute('value') == "BACK" && document.getElementById('square'+(((layer-1)*5)+1) ).innerHTML != ""){
+                    for (j = 0;j<30;j++){
+                        if(document.getElementById('square'+(j+1)).innerHTML === ""){
+                            document.getElementById('square'+(j)).innerHTML = ""
+                            currentSquare--;
+                            console.log("The current square is " + currentSquare)
+                            break;
+                        }
+                    }
+                    if(document.getElementById('square30').innerHTML != ""){
+                        document.getElementById('square30').innerHTML = ""
+                        currentSquare--;
+                        console.log("The current square is " + currentSquare)
                     }
                 }
-                if(document.getElementById('square30').innerHTML != ""){
-                    document.getElementById('square30').innerHTML = ""
+
+                if((key.getAttribute('value') == "ENTER") && (layer/currentSquare)==0.2){
+                    layer++;
                 }
             }
         });
