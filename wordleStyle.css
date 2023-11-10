@@ -14,3 +14,28 @@
     margin: 4px;
     border-radius: 4px;
 }
+#keyboardBox{
+    margin: auto;
+    width: 440px;
+    height: 150px;
+    display:flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.key{
+    width:40px;
+    height:40px;
+    background-color: #878a8c;
+    margin: 1px;
+    border:solid 1px black;
+    border-radius: 4px;
+}
+#key11{
+    margin-left: 3px;
+}
+#key20{
+    width: 60px;
+}
+#key28{
+    width:60px;
+}
