@@ -1,0 +1,30 @@
+*{
+    text-align: center;
+}
+body{
+    background-color: #7f9c96;
+      
+}
+
+li{
+    display: inline;
+    padding: 20px;
+}
+#nav{
+    padding: 10px 0px 5px 0px;
+}
+#projects{
+    background-color: #26547c;
+    padding: 5px;
+}
+.grid-container{
+    display: grid;
+    column-gap: 20px;
+    grid-template-columns: auto auto auto auto;
+    padding: 10px;
+}
+.grid-item{
+    background-color: #26547c;
+    padding: 20px;
+    text-align: center;
+}
