@@ -1,4 +1,5 @@
 const grid = document.querySelector("#wordleGrid")
+const keyboard = document.querySelector("#keyboardBox")
 
 
 function createGrid(){

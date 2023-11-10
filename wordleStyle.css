@@ -1,14 +1,16 @@
 #wordleGrid{
-    width: 400px;
-    height: 480px;
-    background-color: aliceblue;
+    margin: auto;
+    /*background-color: aliceblue;*/
+    width: 380px;
+    height: 456px;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
 }
 .square{
-    width: 80px;
-    height: 80px;
-    border: 4px black;
-    background-color: chartreuse;
+    width: 60px;
+    height: 60px;
+    border: solid 4px black;
+    background-color: #E3E8E9;
+    margin: 4px;
+    border-radius: 4px;
 }
