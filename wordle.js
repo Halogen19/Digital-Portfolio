@@ -5,7 +5,10 @@ var layer = 1;
 var currentSquare = 0;
 var currentGuessedWord = "";
 var wordInList = false;
+var gameEnded = false;
 var wordToGuess = wordList[Math.floor(Math.random()*2309)]
+//var wordToGuess = "hello"
+var letterInWord = false;
 
 function disappearPopUp(){
     document.getElementById('notInList').style.display='none'
@@ -31,7 +34,7 @@ function createKeyboard(){
             //function occurs when any key on created keyboard is pressed
             //debugging line
             console.log('Key ' + (i+1) + ' was clicked!');
-            if (layer<7){
+            if (layer<7 &&!gameEnded){
                 if (layer/currentSquare>0.2||currentSquare ==0){
                     //stops enter and back keys appearing in boxes when they are clicked
                     if (key.getAttribute('value') != "BACK" && key.getAttribute('value') != "ENTER"){
@@ -71,6 +74,50 @@ function createKeyboard(){
                     console.log('Word guessed on layer '+ layer + ' is '+ currentGuessedWord.toLowerCase())
                     for (j=0;j<wordList.length;j++){
                         if (currentGuessedWord.toLowerCase() === wordList[j]){
+                            for(i=0;i<5;i++){
+                                if (currentGuessedWord.toLowerCase()[i] === wordToGuess[i]){
+                                    document.getElementById('square'+(i+1+(layer-1)*5)).style.backgroundColor= 'green'
+                                    //console.log('Corresponding letter of key turning green is ' + wordToGuess[i].toUpperCase())
+                                    //console.log('Number of key to turn green ' + (keyCharacters.indexOf(wordToGuess[i].toUpperCase())+1))
+                                    document.getElementById('key'+(keyCharacters.indexOf(wordToGuess[i].toUpperCase())+1)).style.backgroundColor='green'
+
+                                }
+                            }
+                            //looping through guessedWord
+                            for (i=0;i<5;i++){
+                                //looping through generatedWord
+                                for (j=0;j<5;j++){
+                                    if (i!= j && document.getElementById('square'+(i+1+(layer-1)*5)).style.backgroundColor!= 'green'){
+                                        if (currentGuessedWord.toLowerCase()[i] === wordToGuess[j]){
+                                            document.getElementById('square'+(i+1+(layer-1)*5)).style.backgroundColor= 'orange'
+                                            if (document.getElementById('key'+(keyCharacters.indexOf(wordToGuess[j].toUpperCase())+1)).style.backgroundColor!='green'){
+                                                document.getElementById('key'+(keyCharacters.indexOf(wordToGuess[j].toUpperCase())+1)).style.backgroundColor='orange'
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                            //looping through guessed word
+                            for (i=0;i<5;i++){
+                                //looping through generatedWord
+                                for (j=0;j<5;j++){
+                                    if (currentGuessedWord.toLowerCase()[i] === wordToGuess[j]){
+                                        letterInWord = true;
+                                    }
+                                }
+                                if(!letterInWord){
+                                    document.getElementById('square'+(i+1+(layer-1)*5)).style.backgroundColor= 'black'
+                                    document.getElementById('square'+(i+1+(layer-1)*5)).style.color= 'white'
+                                    document.getElementById('key'+(keyCharacters.indexOf(currentGuessedWord[i].toUpperCase())+1)).style.backgroundColor='black'
+                                    document.getElementById('key'+(keyCharacters.indexOf(currentGuessedWord[i].toUpperCase())+1)).style.color='white'
+                                }
+                                letterInWord = false;
+                            }
+                            if(wordToGuess === currentGuessedWord.toLowerCase()){
+                                document.getElementById('notInList').innerHTML = "You Win"
+                                document.getElementById('notInList').style.display='flex'
+                                gameEnded = true;
+                            }
                             layer++;
                             wordInList = true;
                             currentGuessedWord = ""
