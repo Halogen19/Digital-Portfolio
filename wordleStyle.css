@@ -6,6 +6,23 @@
     display: flex;
     flex-wrap: wrap;
 }
+#notInList{
+    display:none;
+    justify-content: center;
+    align-items:center ;
+    margin:auto;
+    font-size: 30px;
+    width: 220px;
+    height: 60px;
+    background-color: black;
+    border-radius: 20px;
+    color: red
+}
+#popUpContainer{
+    margin: auto;
+    width:220px;
+    height:60px;
+}
 .square{
     width: 60px;
     height: 60px;

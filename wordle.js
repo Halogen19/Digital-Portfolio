@@ -3,7 +3,13 @@ const grid = document.querySelector("#wordleGrid")
 const keyboard = document.querySelector("#keyboardBox")
 var layer = 1;
 var currentSquare = 0;
+var currentGuessedWord = "";
+var wordInList = false;
+var wordToGuess = wordList[Math.floor(Math.random()*2309)]
 
+function disappearPopUp(){
+    document.getElementById('notInList').style.display='none'
+}
 
 function createGrid(){
     for (let i = 0;i<30;i++){
@@ -58,7 +64,25 @@ function createKeyboard(){
                 }
 
                 if((key.getAttribute('value') == "ENTER") && (layer/currentSquare)==0.2){
-                    layer++;
+                    //determine most recent guessed word
+                    for (i = (5*layer); i>((5*layer)-5);i--){
+                        currentGuessedWord = document.getElementById('square' + i).innerHTML + currentGuessedWord 
+                    }
+                    console.log('Word guessed on layer '+ layer + ' is '+ currentGuessedWord.toLowerCase())
+                    for (j=0;j<wordList.length;j++){
+                        if (currentGuessedWord.toLowerCase() === wordList[j]){
+                            layer++;
+                            wordInList = true;
+                            currentGuessedWord = ""
+                            break;
+                        }
+                    }
+                    if (!wordInList){
+                        document.getElementById('notInList').style.display='flex'
+                        currentGuessedWord="";
+                        setTimeout(disappearPopUp,2000);
+                    }
+                    wordInList = false;
                 }
             }
         });
