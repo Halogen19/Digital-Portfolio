@@ -7,8 +7,8 @@ var currentGuessedWord = "";
 var currentGuessedWordMemory = ""
 var wordInList = false;
 var gameEnded = false;
-//var wordToGuess = wordList[Math.floor(Math.random()*2309)]
-var wordToGuess = "linen"
+var wordToGuess = wordList[Math.floor(Math.random()*2309)]
+//var wordToGuess = "linen"
 var letterInWord = false;
 
 function disappearPopUp(){
