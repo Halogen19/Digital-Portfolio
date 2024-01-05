@@ -8,7 +8,8 @@ var currentGuessedWordMemory = ""
 var wordInList = false;
 var gameEnded = false;
 var wordToGuess = wordList[Math.floor(Math.random()*2309)]
-//var wordToGuess = "linen"
+var wordToGuessMemory = ""
+//var wordToGuess = "scree"
 var letterInWord = false;
 
 function disappearPopUp(){
@@ -41,6 +42,19 @@ function replaceCharAtIndexWithStop(word, index){
     }
     return newWord
 }
+
+function replaceCharAtIndexWithComma(word, index){
+    newWord = ""
+    for (let i = 0; i<word.length;i++){
+        if (i != index){
+            newWord = newWord + word[i]
+        }else{
+            newWord = newWord + ","
+        } 
+    }
+    return newWord
+}
+
 function keyClicked(e,i){
     //function occurs when any key on created keyboard is pressed
     //debugging line
@@ -88,6 +102,7 @@ function keyClicked(e,i){
             for (j=0;j<wordList.length;j++){
                 //check if word guessed is valid word
                 wordToGuessMemory = wordToGuess
+                currentGuessedWordMemory = currentGuessedWord
                 if (currentGuessedWord.toLowerCase() === wordList[j]){
                     for(i=0;i<5;i++){
                         if (currentGuessedWord.toLowerCase()[i] === wordToGuess[i]){
@@ -98,10 +113,12 @@ function keyClicked(e,i){
                             document.getElementById('key'+(keyCharacters.indexOf(wordToGuess[i].toUpperCase())+1)).style.backgroundColor='green'
                             //change green letters in currentGuessedWord to "."
                             wordToGuess = replaceCharAtIndexWithStop(wordToGuess, i)
+                            currentGuessedWord = replaceCharAtIndexWithComma(currentGuessedWord, i)
 
                         }
                     }
                     console.log("The word after taking out greens is " + wordToGuess)
+                    console.log("The word guessed after taking out greens is " + currentGuessedWord)
                     //looping through guessedWord
                     for (i=0;i<5;i++){
                         //looping through generatedWord
@@ -112,6 +129,8 @@ function keyClicked(e,i){
                                     if (document.getElementById('key'+(keyCharacters.indexOf(wordToGuess[j].toUpperCase())+1)).style.backgroundColor!='green'){
                                         document.getElementById('key'+(keyCharacters.indexOf(wordToGuess[j].toUpperCase())+1)).style.backgroundColor='orange'
                                     }
+                                    currentGuessedWord = replaceCharAtIndexWithComma(currentGuessedWord,i)
+                                    wordToGuess = replaceCharAtIndexWithStop(wordToGuess,j)
                                 }
                             }
                         }
@@ -138,13 +157,14 @@ function keyClicked(e,i){
                         letterInWord = false;
                     }
                     wordToGuess = wordToGuessMemory
+                    currentGuessedWord = currentGuessedWordMemory
                     layer++;
                     if(wordToGuess === currentGuessedWord.toLowerCase()){
                         document.getElementById('notInList').innerHTML = "You Win"
                         document.getElementById('notInList').style.display='flex'
                         gameEnded = true;
                     }
-                    if (layer == 7){
+                    if (layer == 7 && wordToGuess != currentGuessedWord.toLowerCase()){
                         document.getElementById('notInList').innerHTML = "You Lose"
                         document.getElementById('notInList').style.display='flex'
                         document.getElementById('word').innerHTML = wordToGuess.toUpperCase()
